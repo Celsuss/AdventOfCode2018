@@ -9,7 +9,6 @@ def GetDuplicates(ids):
     threePairs = 0
 
     for id in ids:
-
         dups = {}
         for c in id:
             if c in dups:
@@ -58,8 +57,6 @@ def PartOne():
 
     ids = InputReader.ReadFileStr("DayTwoInput")
     twoPairs, threePairs = GetDuplicates(ids)
-    print("Two pairs: {}".format(twoPairs))
-    print("Three pairs: {}".format(threePairs))
     checksum = GetChecksum(twoPairs, threePairs)
     print("Checksum: {}".format(checksum))
 
@@ -67,10 +64,49 @@ def PartOne():
 # Day two part two #
 ####################
 
+def GetMatchingBoxes(ids):
+    matchingIds = []
+    uniqueIds = []
+    for id in ids:
+        if len(uniqueIds) == 0:
+            uniqueIds.append(id)
+            continue
+        
+        match = False
+        for uId in uniqueIds:
+            sum = [c for c, d in zip(id, uId) if c == d]
+            if len(sum) >= len(ids[0])-1:
+                match = True
+                if uId not in matchingIds:
+                    matchingIds.append(uId)
+                if id not in matchingIds:
+                    matchingIds.append(id)
+                break
+            
+        if match == False:
+            uniqueIds.append(id)
+
+    return matchingIds
+
+def GetMatchingCharacters(ids):
+    if len(ids) < 2:
+        return ""
+    chars = [c for c, d in zip(ids[0], ids[1]) if c == d]
+    matchingStr = "".join(str(c) for c in chars)
+    return matchingStr
+        
+
 def PartTwo():
     testIds = ['abcde', 'fghij', 'klmno', 'pqrst', 'fguij', 'axcye', 'wvxyz']
+    matchingIds = GetMatchingBoxes(testIds)
+    matchingChars = GetMatchingCharacters(matchingIds)
+    assert matchingChars == 'fgij', "{} should be fgij".format(matchingChars)
 
     ids = InputReader.ReadFileStr("DayTwoInput")
+    matchingIds = GetMatchingBoxes(ids)
+    matchingChars = GetMatchingCharacters(matchingIds)
+    print("Matching characters {}".format(matchingChars))
+
 
 if __name__ == "__main__":
     PartOne()

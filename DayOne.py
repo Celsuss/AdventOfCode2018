@@ -49,13 +49,13 @@ def PartTwo():
 
     # Test cases
     frequency = FindRepeatedFrequency([1, -1])
-    assert frequency == 0
+    assert frequency == 0, "{} should be 0".format(frequency)
     frequency = FindRepeatedFrequency([3, 3, 4, -2, -4])
-    assert frequency == 10
+    assert frequency == 10, "{} should be 10".format(frequency)
     frequency = FindRepeatedFrequency([-6, 3, 8, 5, -6])
-    assert frequency == 5
+    assert frequency == 5, "{} should be 5".format(frequency)
     frequency = FindRepeatedFrequency([7, 7, -2, -7, -4])
-    assert frequency == 14
+    assert frequency == 14, "{} should be 14".format(frequency)
 
     # Get the answer
     frequency = FindRepeatedFrequency(input)
